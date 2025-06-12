@@ -31,7 +31,7 @@ export default function UserManagementPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Simulate fetching users
+    // Simular carga de usuarios
     setUsers(mockUsers);
   }, []);
 
@@ -66,18 +66,18 @@ export default function UserManagementPage() {
   const handleDeleteUser = () => {
     if (!userToDelete) return;
     setUsers(prevUsers => prevUsers.filter(u => u.id !== userToDelete.id));
-    toast({ title: "User Deleted", description: `${userToDelete.name} has been removed.`});
+    toast({ title: "Usuario Eliminado", description: `${userToDelete.name} ha sido eliminado.`});
     setUserToDelete(null);
   };
 
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-headline font-bold text-primary">User Management</h1>
+        <h1 className="text-4xl font-headline font-bold text-primary">Gestión de Usuarios</h1>
         <CreateUserDialog onUserCreated={handleUserCreated} 
           triggerButton={
             <Button className="font-headline">
-              <UserPlus className="mr-2 h-5 w-5" /> Add New User
+              <UserPlus className="mr-2 h-5 w-5" /> Añadir Nuevo Usuario
             </Button>
           }
         />
@@ -87,7 +87,7 @@ export default function UserManagementPage() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search users by name or email..."
+          placeholder="Buscar usuarios por nombre o email..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pl-10 w-full md:w-1/2 lg:w-1/3"
@@ -113,15 +113,15 @@ export default function UserManagementPage() {
       <AlertDialog open={!!userToDelete} onOpenChange={() => setUserToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="font-headline">Are you sure you want to delete this user?</AlertDialogTitle>
+            <AlertDialogTitle className="font-headline">¿Estás seguro de que quieres eliminar este usuario?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the user <span className="font-semibold">{userToDelete?.name}</span> and remove their data from servers.
+              Esta acción no se puede deshacer. Esto eliminará permanentemente al usuario <span className="font-semibold">{userToDelete?.name}</span> y sus datos de los servidores.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setUserToDelete(null)}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setUserToDelete(null)}>Cancelar</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteUser} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-              Delete User
+              Eliminar Usuario
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

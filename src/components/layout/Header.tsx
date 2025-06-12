@@ -20,11 +20,17 @@ export default function Header() {
   const { user, logout, isLoading, switchUserRole } = useAuth();
 
   const getInitials = (name: string = '') => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase() || 'N C';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase() || 'C A';
   };
   
   const handleRoleSwitch = (role: Role) => {
     switchUserRole(role);
+  };
+
+  const roleTranslations: Record<Role, string> = {
+    user: "Usuario",
+    creator: "Creador",
+    admin: "Admin"
   };
 
   return (
@@ -36,24 +42,24 @@ export default function Header() {
 
         <nav className="flex items-center space-x-4">
           <Link href="/" passHref>
-            <Button variant="ghost" className="font-headline">Home</Button>
+            <Button variant="ghost" className="font-headline">Inicio</Button>
           </Link>
           {user && (
             <Link href="/dashboard" passHref>
-              <Button variant="ghost" className="font-headline">Dashboard</Button>
+              <Button variant="ghost" className="font-headline">Panel</Button>
             </Link>
           )}
           {user?.role === 'creator' && (
             <Link href="/create-post" passHref>
               <Button variant="ghost" className="font-headline">
-                <PlusCircle className="mr-2 h-4 w-4" /> Create Post
+                <PlusCircle className="mr-2 h-4 w-4" /> Crear Publicación
               </Button>
             </Link>
           )}
           {user?.role === 'admin' && (
             <Link href="/admin/dashboard" passHref>
               <Button variant="ghost" className="font-headline">
-                <Shield className="mr-2 h-4 w-4" /> Admin Panel
+                <Shield className="mr-2 h-4 w-4" /> Panel de Admin
               </Button>
             </Link>
           )}
@@ -73,36 +79,36 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>My Account ({user.role})</DropdownMenuLabel>
+                <DropdownMenuLabel>Mi Cuenta ({user.role ? roleTranslations[user.role] : ''})</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <Link href="/profile" passHref>
                   <DropdownMenuItem>
                     <UserCircle className="mr-2 h-4 w-4" />
-                    Profile
+                    Perfil
                   </DropdownMenuItem>
                 </Link>
                 <DropdownMenuSeparator />
-                <DropdownMenuLabel>Switch Role (Demo)</DropdownMenuLabel>
+                <DropdownMenuLabel>Cambiar Rol (Demo)</DropdownMenuLabel>
                 <DropdownMenuItem onSelect={() => handleRoleSwitch('user')}>
-                  <UserCircle className="mr-2 h-4 w-4" /> As User
+                  <UserCircle className="mr-2 h-4 w-4" /> Como Usuario
                 </DropdownMenuItem>
                 <DropdownMenuItem onSelect={() => handleRoleSwitch('creator')}>
-                  <Edit3 className="mr-2 h-4 w-4" /> As Creator
+                  <Edit3 className="mr-2 h-4 w-4" /> Como Creador
                 </DropdownMenuItem>
                 <DropdownMenuItem onSelect={() => handleRoleSwitch('admin')}>
-                  <LayoutDashboard className="mr-2 h-4 w-4" /> As Admin
+                  <LayoutDashboard className="mr-2 h-4 w-4" /> Como Admin
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={logout}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  Logout
+                  Cerrar Sesión
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <Link href="/login" passHref>
               <Button className="font-headline">
-                <LogIn className="mr-2 h-4 w-4" /> Login
+                <LogIn className="mr-2 h-4 w-4" /> Iniciar Sesión
               </Button>
             </Link>
           )}

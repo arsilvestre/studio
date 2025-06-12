@@ -19,7 +19,7 @@ const Logo = (props: SVGProps<SVGSVGElement>) => (
       fontWeight="bold"
       fill="currentColor"
     >
-      NexusConnect
+      ComuniArte
     </text>
   </svg>
 );

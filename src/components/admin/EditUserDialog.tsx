@@ -56,7 +56,7 @@ export default function EditUserDialog({ user, isOpen, onOpenChange, onUserUpdat
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.role) {
-      toast({ title: "Missing Fields", description: "Name, email, and role are required.", variant: "destructive" });
+      toast({ title: "Campos Faltantes", description: "Nombre, email y rol son requeridos.", variant: "destructive" });
       return;
     }
     
@@ -65,10 +65,10 @@ export default function EditUserDialog({ user, isOpen, onOpenChange, onUserUpdat
       name: formData.name,
       email: formData.email,
       role: formData.role,
-      avatarUrl: user?.avatarUrl // Keep original avatar or logic to update it
+      avatarUrl: user?.avatarUrl // Mantener avatar original o lógica para actualizarlo
     };
     onUserUpdated(updatedUser);
-    toast({ title: 'User Updated', description: `${updatedUser.name}'s details have been updated.` });
+    toast({ title: 'Usuario Actualizado', description: `Los detalles de ${updatedUser.name} han sido actualizados.` });
     onOpenChange(false);
   };
 
@@ -78,12 +78,12 @@ export default function EditUserDialog({ user, isOpen, onOpenChange, onUserUpdat
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="font-headline text-primary">Edit User: {user.name}</DialogTitle>
-          <DialogDescription>Modify the user's details below.</DialogDescription>
+          <DialogTitle className="font-headline text-primary">Editar Usuario: {user.name}</DialogTitle>
+          <DialogDescription>Modifica los detalles del usuario a continuación.</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
           <div>
-            <Label htmlFor="edit-name">Name</Label>
+            <Label htmlFor="edit-name">Nombre</Label>
             <Input id="edit-name" name="name" value={formData.name || ''} onChange={handleChange} required />
           </div>
           <div>
@@ -91,21 +91,21 @@ export default function EditUserDialog({ user, isOpen, onOpenChange, onUserUpdat
             <Input id="edit-email" name="email" type="email" value={formData.email || ''} onChange={handleChange} required />
           </div>
           <div>
-            <Label htmlFor="edit-role">Role</Label>
+            <Label htmlFor="edit-role">Rol</Label>
             <Select name="role" onValueChange={handleRoleChange} value={formData.role || 'user'}>
               <SelectTrigger id="edit-role">
-                <SelectValue placeholder="Select a role" />
+                <SelectValue placeholder="Selecciona un rol" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="user">User</SelectItem>
-                <SelectItem value="creator">Creator</SelectItem>
+                <SelectItem value="user">Usuario</SelectItem>
+                <SelectItem value="creator">Creador</SelectItem>
                 <SelectItem value="admin">Admin</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button type="submit">Save Changes</Button>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
+            <Button type="submit">Guardar Cambios</Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -25,7 +25,7 @@ import type { Dispatch, SetStateAction } from 'react';
 
 interface UserManagementTableProps {
   users: User[];
-  setUsers: Dispatch<SetStateAction<User[]>>; // To update users after delete/edit
+  setUsers: Dispatch<SetStateAction<User[]>>;
   onEditUser: (user: User) => void;
   onDeleteUser: (userId: string) => void;
 }
@@ -41,10 +41,19 @@ const RoleIcon = ({ role }: { role: Role }) => {
 
 const RoleBadge = ({ role }: { role: Role }) => {
   let variant: "default" | "secondary" | "destructive" | "outline" = "default";
-  if (role === 'admin') variant = 'destructive';
-  else if (role === 'creator') variant = 'secondary'; // Using secondary for creators for variety
+  let roleText = role.charAt(0).toUpperCase() + role.slice(1);
+
+  if (role === 'admin') {
+    variant = 'destructive';
+    roleText = 'Admin';
+  } else if (role === 'creator') {
+    variant = 'secondary';
+    roleText = 'Creador';
+  } else {
+    roleText = 'Usuario';
+  }
   
-  return <Badge variant={variant} className="capitalize">{role}</Badge>;
+  return <Badge variant={variant} className="capitalize">{roleText}</Badge>;
 };
 
 
@@ -60,10 +69,10 @@ export default function UserManagementTable({ users, setUsers, onEditUser, onDel
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>User</TableHead>
+              <TableHead>Usuario</TableHead>
               <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead>Rol</TableHead>
+              <TableHead className="text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -72,7 +81,7 @@ export default function UserManagementTable({ users, setUsers, onEditUser, onDel
                 <TableCell className="font-medium">
                   <div className="flex items-center space-x-3">
                     <Avatar className="h-9 w-9">
-                      <AvatarImage src={user.avatarUrl} alt={user.name} data-ai-hint="user avatar" />
+                      <AvatarImage src={user.avatarUrl} alt={user.name} data-ai-hint="avatar usuario" />
                       <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
                     </Avatar>
                     <span className="font-headline">{user.name}</span>
@@ -89,21 +98,21 @@ export default function UserManagementTable({ users, setUsers, onEditUser, onDel
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" className="h-8 w-8 p-0">
-                        <span className="sr-only">Open menu</span>
+                        <span className="sr-only">Abrir menú</span>
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Acciones</DropdownMenuLabel>
                       <DropdownMenuItem onClick={() => onEditUser(user)}>
-                        <Edit className="mr-2 h-4 w-4" /> Edit User
+                        <Edit className="mr-2 h-4 w-4" /> Editar Usuario
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem 
                         onClick={() => onDeleteUser(user.id)}
                         className="text-destructive focus:text-destructive focus:bg-destructive/10"
                       >
-                        <Trash2 className="mr-2 h-4 w-4" /> Delete User
+                        <Trash2 className="mr-2 h-4 w-4" /> Eliminar Usuario
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -117,5 +126,4 @@ export default function UserManagementTable({ users, setUsers, onEditUser, onDel
   );
 }
 
-// Need to import Card and CardContent if not already globally available in the file scope
 import { Card, CardContent } from '@/components/ui/card';

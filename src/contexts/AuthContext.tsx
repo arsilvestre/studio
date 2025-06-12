@@ -10,7 +10,7 @@ interface AuthContextType {
   login: (email: string, roleOverride?: Role) => void;
   logout: () => void;
   isLoading: boolean;
-  switchUserRole: (role: Role) => void; // For demo purposes
+  switchUserRole: (role: Role) => void; // Para fines de demostración
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,8 +21,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Simulate checking for an existing session
-    const storedUser = localStorage.getItem('nexusUser');
+    // Simular la comprobación de una sesión existente
+    const storedUser = localStorage.getItem('comuniarteUser');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -31,53 +31,53 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = (email: string, roleOverride?: Role) => {
     setIsLoading(true);
-    // Simulate API call & find user
+    // Simular llamada a la API y encontrar usuario
     let foundUser = mockUsers.find(u => u.email === email);
-    if (!foundUser && email === 'new@user.com') { // Simulate signup
-      foundUser = { id: Date.now().toString(), name: 'New User', email, role: 'user' };
+    if (!foundUser && email === 'nuevo@usuario.com') { // Simular registro
+      foundUser = { id: Date.now().toString(), name: 'Nuevo Usuario', email, role: 'user' };
       mockUsers.push(foundUser);
     } else if (!foundUser) {
-      // Default to a generic user if not found, for easier testing without specific emails
-      foundUser = { id: 'guest', name: 'Guest User', email: 'guest@example.com', role: 'user' };
+      // Por defecto, un usuario genérico si no se encuentra, para facilitar pruebas sin correos específicos
+      foundUser = { id: 'invitado', name: 'Usuario Invitado', email: 'invitado@ejemplo.com', role: 'user' };
     }
 
     if (foundUser) {
       const userToLogin = { ...foundUser, role: roleOverride || foundUser.role };
       setUser(userToLogin);
-      localStorage.setItem('nexusUser', JSON.stringify(userToLogin));
+      localStorage.setItem('comuniarteUser', JSON.stringify(userToLogin));
       if (userToLogin.role === 'admin') {
         router.push('/admin/dashboard');
       } else {
         router.push('/dashboard');
       }
     } else {
-      // Handle login failure (e.g., show a toast)
-      console.error('Login failed: User not found');
+      // Manejar fallo de inicio de sesión (ej., mostrar un toast)
+      console.error('Inicio de sesión fallido: Usuario no encontrado');
     }
     setIsLoading(false);
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('nexusUser');
+    localStorage.removeItem('comuniarteUser');
     router.push('/login');
   };
   
-  // For demo purposes: allow switching user roles easily
+  // Para fines de demostración: permitir cambiar roles de usuario fácilmente
   const switchUserRole = (role: Role) => {
     if (user) {
       const updatedUser = { ...user, role };
       setUser(updatedUser);
-      localStorage.setItem('nexusUser', JSON.stringify(updatedUser));
-      // Navigate to appropriate dashboard after role switch for better UX
+      localStorage.setItem('comuniarteUser', JSON.stringify(updatedUser));
+      // Navegar al panel apropiado después del cambio de rol para mejor UX
       if (role === 'admin') router.push('/admin/dashboard');
       else router.push('/dashboard');
     } else {
-      // If no user is logged in, log in as a default user with the specified role
-      const defaultUser = mockUsers.find(u => u.role === role) || mockUsers[0]; // Fallback to first mock user
+      // Si no hay usuario conectado, iniciar sesión como usuario por defecto con el rol especificado
+      const defaultUser = mockUsers.find(u => u.role === role) || mockUsers[0]; // Recurrir al primer usuario mock
       const userToLogin = { ...defaultUser, role };
       setUser(userToLogin);
-      localStorage.setItem('nexusUser', JSON.stringify(userToLogin));
+      localStorage.setItem('comuniarteUser', JSON.stringify(userToLogin));
       if (role === 'admin') router.push('/admin/dashboard');
       else router.push('/dashboard');
     }

@@ -11,19 +11,19 @@ import { Mail, KeyRound } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); // Password not used in mock, but good for UI
+  const [password, setPassword] = useState(''); // Contraseña no usada en mock, pero útil para UI
   const { login, isLoading } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      // Basic validation, in a real app use react-hook-form & zod
-      alert('Please enter an email.');
+      // Validación básica, en una app real usar react-hook-form & zod
+      alert('Por favor, introduce un correo electrónico.');
       return;
     }
-    // For demo purposes, you can log in with specific emails from mockUsers
-    // e.g., admin@nexusconnect.com, creator@nexusconnect.com, user@nexusconnect.com
-    // Or any email to log in as a generic user if not found.
+    // Para fines de demostración, puedes iniciar sesión con correos específicos de mockUsers
+    // ej., admin@comuniarte.com, creator@comuniarte.com, user@comuniarte.com
+    // O cualquier correo para iniciar sesión como usuario genérico si no se encuentra.
     login(email);
   };
 
@@ -31,19 +31,19 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
       <Card className="w-full max-w-md shadow-2xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-headline text-primary">Login to NexusConnect</CardTitle>
-          <CardDescription>Enter your credentials to access your account.</CardDescription>
+          <CardTitle className="text-3xl font-headline text-primary">Inicia Sesión en ComuniArte</CardTitle>
+          <CardDescription>Introduce tus credenciales para acceder a tu cuenta.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">Correo Electrónico</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="tu@ejemplo.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -52,7 +52,7 @@ export default function LoginPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Contraseña</Label>
                <div className="relative">
                 <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
@@ -67,19 +67,19 @@ export default function LoginPage() {
               </div>
             </div>
             <Button type="submit" className="w-full font-headline" disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Login'}
+              {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="text-center block">
           <p className="text-sm text-muted-foreground">
-            Don&apos;t have an account?{' '}
+            ¿No tienes una cuenta?{' '}
             <Button variant="link" asChild className="text-accent p-0 h-auto">
-              <Link href="/signup">Sign up</Link>
+              <Link href="/signup">Regístrate</Link>
             </Button>
           </p>
            <p className="text-xs text-muted-foreground mt-4">
-            Demo logins: admin@nexusconnect.com, creator@nexusconnect.com, user@nexusconnect.com. Any other email logs in as a 'user'.
+            Inicios de sesión demo: admin@comuniarte.com, creator@comuniarte.com, user@comuniarte.com. Cualquier otro correo inicia sesión como 'user'.
           </p>
         </CardFooter>
       </Card>

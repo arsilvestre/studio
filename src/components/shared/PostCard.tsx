@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Heart, MessageSquare, Share2, Video, Image as ImageIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import { formatDistanceToNow } from 'date-fns';
+import { es } from 'date-fns/locale'; // Importar locale español
 
 interface PostCardProps {
   post: Post;
@@ -12,20 +13,20 @@ interface PostCardProps {
 
 export default function PostCard({ post }: PostCardProps) {
   const getInitials = (name: string = '') => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase() || 'NN';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase() || 'CA';
   };
 
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
       <CardHeader className="flex flex-row items-center space-x-3 p-4">
         <Avatar>
-          <AvatarImage src={post.creatorAvatarUrl} alt={post.creatorName} data-ai-hint="profile avatar" />
+          <AvatarImage src={post.creatorAvatarUrl} alt={post.creatorName} data-ai-hint="avatar perfil" />
           <AvatarFallback>{getInitials(post.creatorName)}</AvatarFallback>
         </Avatar>
         <div>
           <CardTitle className="text-base font-headline">{post.creatorName}</CardTitle>
           <CardDescription className="text-xs">
-            {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+            {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true, locale: es })}
           </CardDescription>
         </div>
       </CardHeader>
@@ -33,10 +34,10 @@ export default function PostCard({ post }: PostCardProps) {
         <div className="relative w-full aspect-video bg-muted">
           <Image 
             src={post.mediaUrl} 
-            alt="Post media" 
+            alt="Multimedia de la publicación" 
             layout="fill" 
             objectFit="cover" 
-            data-ai-hint={post.mediaType === 'image' ? "social media" : "video content"}
+            data-ai-hint={post.mediaType === 'image' ? "redes sociales" : "contenido video"}
           />
           {post.mediaType === 'video' && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/30">

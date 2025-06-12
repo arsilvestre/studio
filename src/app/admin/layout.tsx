@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       if (!user) {
         router.push('/login?redirect=/admin/dashboard');
       } else if (user.role !== 'admin') {
-        router.push('/dashboard'); // Or a dedicated "access denied" page
+        router.push('/dashboard'); // O una página dedicada de "acceso denegado"
       }
     }
   }, [user, isLoading, router]);
@@ -24,7 +24,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-background">
         <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
-        <p className="text-2xl font-headline text-foreground">Verifying access...</p>
+        <p className="text-2xl font-headline text-foreground">Verificando acceso...</p>
       </div>
     );
   }
@@ -33,10 +33,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     return (
        <div className="flex flex-col items-center justify-center h-screen bg-background p-8 text-center">
         <ShieldAlert className="h-24 w-24 text-destructive mb-6" />
-        <h1 className="text-4xl font-headline text-destructive mb-3">Access Denied</h1>
-        <p className="text-lg text-foreground mb-8">You do not have permission to view this page.</p>
+        <h1 className="text-4xl font-headline text-destructive mb-3">Acceso Denegado</h1>
+        <p className="text-lg text-foreground mb-8">No tienes permiso para ver esta página.</p>
         <button onClick={() => router.push('/dashboard')} className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-headline">
-          Go to Dashboard
+          Ir al Panel
         </button>
       </div>
     );

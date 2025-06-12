@@ -9,11 +9,11 @@ import { LayoutDashboard, Users, Settings, BarChart3, ShieldAlert } from 'lucide
 import { cn } from '@/lib/utils';
 
 const adminNavItems = [
-  { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/users', label: 'User Management', icon: Users },
-  { href: '/admin/content', label: 'Content Moderation', icon: ShieldAlert, disabled: true },
-  { href: '/admin/analytics', label: 'Analytics', icon: BarChart3, disabled: true },
-  { href: '/admin/settings', label: 'Settings', icon: Settings, disabled: true },
+  { href: '/admin/dashboard', label: 'Panel', icon: LayoutDashboard },
+  { href: '/admin/users', label: 'Gestión de Usuarios', icon: Users },
+  { href: '/admin/content', label: 'Moderación Contenido', icon: ShieldAlert, disabled: true },
+  { href: '/admin/analytics', label: 'Analíticas', icon: BarChart3, disabled: true },
+  { href: '/admin/settings', label: 'Configuración', icon: Settings, disabled: true },
 ];
 
 export default function AdminSidebar() {
@@ -25,7 +25,7 @@ export default function AdminSidebar() {
         <Link href="/admin/dashboard" className="flex items-center gap-2">
           <Logo className="h-8 w-auto text-sidebar-primary" />
         </Link>
-        <p className="text-xs text-sidebar-foreground/70 mt-1">Admin Panel</p>
+        <p className="text-xs text-sidebar-foreground/70 mt-1">Panel de Admin</p>
       </div>
       <ScrollArea className="flex-1">
         <nav className="p-4 space-y-2">
@@ -51,7 +51,7 @@ export default function AdminSidebar() {
       </ScrollArea>
       <div className="p-4 border-t border-sidebar-border mt-auto">
         <Button variant="outline" className="w-full font-headline" asChild>
-            <Link href="/">Back to Site</Link>
+            <Link href="/">Volver al Sitio</Link>
         </Button>
       </div>
     </aside>
