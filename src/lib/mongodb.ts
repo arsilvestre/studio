@@ -34,6 +34,23 @@ if (process.env.NODE_ENV === 'development') {
 export default clientPromise;
 */
 
+import { MongoClient } from 'mongodb';
+    import { uri, dbName } from './config/mongodbConfig'; // Asegúrate de que la ruta sea correcta
+
+    let cachedClient: MongoClient | null = null;
+
+    export async function connectToDatabase() {
+      if (cachedClient) {
+        return cachedClient.db(dbName);
+      }
+
+      const client = new MongoClient(uri);
+      await client.connect();
+      cachedClient = client;
+      return client.db(dbName);
+    }
+
+
 console.log("MongoDB connector placeholder loaded. Configure in src/lib/mongodb.ts");
 
 export default null; // Placeholder export
